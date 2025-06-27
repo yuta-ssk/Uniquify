@@ -152,20 +152,12 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
           </div>
         </div>
         
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => downloadCSV(result.data, 'deduplicated')}
-            className="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-          >
-            処理後CSVをダウンロード
-          </button>
-          <button
-            onClick={() => downloadCSV(originalData, 'original')}
-            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            処理前CSVをダウンロード
-          </button>
-        </div>
+        <button
+          onClick={() => downloadCSV(result.data, 'deduplicated')}
+          className="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+        >
+          処理後CSVをダウンロード
+        </button>
       </div>
       
       <div className="mb-4">

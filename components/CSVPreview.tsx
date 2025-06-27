@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import Papa from 'papaparse'
 
 interface CSVPreviewProps {
   data: any[]
@@ -89,38 +88,12 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, on
     }
   }
 
-  const downloadCSV = () => {
-    const csv = Papa.unparse({
-      fields: headers,
-      data: data
-    })
-    
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-    const link = document.createElement('a')
-    const url = URL.createObjectURL(blob)
-    
-    link.setAttribute('href', url)
-    link.setAttribute('download', `${title}_${new Date().toISOString().slice(0, 10)}.csv`)
-    link.style.visibility = 'hidden'
-    
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-600">総行数: {data.length}行</p>
-        </div>
-        <button
-          onClick={downloadCSV}
-          className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-        >
-          CSVダウンロード
-        </button>
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <p className="text-sm text-gray-600">総行数: {data.length}行</p>
       </div>
       
       <div className="overflow-x-auto">
