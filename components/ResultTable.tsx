@@ -3,16 +3,19 @@
 import React, { useState } from 'react'
 import Papa from 'papaparse'
 import { DeduplicateResult } from '../lib/deduplicate'
+import { DiffViewer } from './DiffViewer'
+import { calculateDiff } from '../lib/diff'
 
 interface ResultTableProps {
   result: DeduplicateResult | null
   originalData: any[]
   headers: string[]
+  selectedFields: string[]
 }
 
-export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, headers }) => {
+export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, headers, selectedFields }) => {
   const [showAll, setShowAll] = useState(false)
-  const [activeTab, setActiveTab] = useState<'before' | 'after'>('after')
+  const [activeTab, setActiveTab] = useState<'after' | 'before' | 'diff'>('after')
   
   if (!result) {
     return null
@@ -37,8 +40,22 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
     document.body.removeChild(link)
   }
 
-  const currentData = activeTab === 'before' ? originalData : result.data
-  const currentTitle = activeTab === 'before' ? '処理前データ' : '処理後データ'
+  const diffResult = calculateDiff(originalData, result.data, selectedFields)
+  
+  const getCurrentData = () => {
+    if (activeTab === 'before') return originalData
+    if (activeTab === 'after') return result.data
+    return []
+  }
+  
+  const getCurrentTitle = () => {
+    if (activeTab === 'before') return '処理前データ'
+    if (activeTab === 'after') return '処理後データ'
+    return '差分ビュー'
+  }
+  
+  const currentData = getCurrentData()
+  const currentTitle = getCurrentTitle()
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -100,68 +117,87 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
           >
             処理前データ ({originalData.length}行)
           </button>
+          <button
+            onClick={() => setActiveTab('diff')}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === 'diff'
+                ? 'border-b-2 border-blue-500 text-blue-600'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            差分ビュー ({diffResult.removed.length}削除)
+          </button>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-md font-medium text-gray-700">
-            {currentTitle} {showAll ? `(全 ${currentData.length} 行)` : `(最初の10行)`}
-          </h3>
-          {currentData.length > 10 && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-            >
-              {showAll ? '最初の10行のみ表示' : 'すべて表示'}
-            </button>
-          )}
-        </div>
-        
-        <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50 sticky top-0">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  #
-                </th>
-                {headers.map((header) => (
-                  <th
-                    key={header}
-                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    {header}
+      {activeTab === 'diff' ? (
+        <DiffViewer
+          originalData={originalData}
+          diffResult={diffResult}
+          headers={headers}
+          selectedFields={selectedFields}
+        />
+      ) : (
+        <div className="overflow-x-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-md font-medium text-gray-700">
+              {currentTitle} {showAll ? `(全 ${currentData.length} 行)` : `(最初の10行)`}
+            </h3>
+            {currentData.length > 10 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+              >
+                {showAll ? '最初の10行のみ表示' : 'すべて表示'}
+              </button>
+            )}
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50 sticky top-0">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    #
                   </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {(showAll ? currentData : currentData.slice(0, 10)).map((row, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-sm text-gray-500">
-                    {index + 1}
-                  </td>
                   {headers.map((header) => (
-                    <td
+                    <th
                       key={header}
-                      className="px-4 py-3 text-sm text-gray-900 max-w-xs truncate"
-                      title={String(row[header] || '')}
+                      className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      {row[header]}
-                    </td>
+                      {header}
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {(showAll ? currentData : currentData.slice(0, 10)).map((row, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-4 py-3 text-sm text-gray-500">
+                      {index + 1}
+                    </td>
+                    {headers.map((header) => (
+                      <td
+                        key={header}
+                        className="px-4 py-3 text-sm text-gray-900 max-w-xs truncate"
+                        title={String(row[header] || '')}
+                      >
+                        {row[header]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {!showAll && currentData.length > 10 && (
+            <p className="mt-2 text-sm text-gray-500 text-center">
+              他 {currentData.length - 10} 行があります
+            </p>
+          )}
         </div>
-        
-        {!showAll && currentData.length > 10 && (
-          <p className="mt-2 text-sm text-gray-500 text-center">
-            他 {currentData.length - 10} 行があります
-          </p>
-        )}
-      </div>
+      )}
     </div>
   )
 }

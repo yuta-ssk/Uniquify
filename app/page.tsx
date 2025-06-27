@@ -99,7 +99,8 @@ export default function Home() {
               <ResultTable 
                 result={result} 
                 originalData={csvData}
-                headers={headers} 
+                headers={headers}
+                selectedFields={selectedFields}
               />
             </>
           )}
