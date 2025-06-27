@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Papa from 'papaparse'
 
 interface CSVPreviewProps {
@@ -10,7 +10,6 @@ interface CSVPreviewProps {
 }
 
 export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title }) => {
-  const [showAll, setShowAll] = useState(false)
 
   if (data.length === 0) {
     return null
@@ -51,23 +50,15 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title }) 
       </div>
       
       <div className="overflow-x-auto">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-4">
           <h4 className="text-md font-medium text-gray-700">
-            データプレビュー {showAll ? `(全 ${data.length} 行)` : `(最初の10行)`}
+            データプレビュー (全 {data.length} 行)
           </h4>
-          {data.length > 10 && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-            >
-              {showAll ? '最初の10行のみ表示' : 'すべて表示'}
-            </button>
-          )}
         </div>
         
-        <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+        <div className="border border-gray-200 rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50 sticky top-0">
+            <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   #
@@ -83,7 +74,7 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title }) 
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {(showAll ? data : data.slice(0, 10)).map((row, index) => (
+              {data.map((row, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="px-4 py-3 text-sm text-gray-500">
                     {index + 1}
@@ -102,12 +93,6 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title }) 
             </tbody>
           </table>
         </div>
-        
-        {!showAll && data.length > 10 && (
-          <p className="mt-2 text-sm text-gray-500 text-center">
-            他 {data.length - 10} 行があります
-          </p>
-        )}
       </div>
     </div>
   )
