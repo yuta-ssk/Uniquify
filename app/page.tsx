@@ -61,6 +61,23 @@ export default function Home() {
     }
   }
 
+  const handleDeleteProcessedRow = (data: any[], index: number) => {
+    if (window.confirm('この行を削除しますか？')) {
+      // 削除する行を特定
+      const rowToDelete = data[index]
+      
+      // 元データから該当行を削除
+      const newCsvData = csvData.filter(row => row !== rowToDelete)
+      setCsvData(newCsvData)
+      
+      // 結果を再計算
+      if (selectedFields.length > 0) {
+        const newResult = deduplicateCSV(newCsvData, selectedFields)
+        setResult(newResult)
+      }
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,6 +127,7 @@ export default function Home() {
                 originalData={csvData}
                 headers={headers}
                 selectedFields={selectedFields}
+                onDeleteRow={handleDeleteProcessedRow}
               />
             </>
           )}

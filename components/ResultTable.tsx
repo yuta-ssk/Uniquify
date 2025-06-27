@@ -11,11 +11,12 @@ interface ResultTableProps {
   originalData: any[]
   headers: string[]
   selectedFields: string[]
+  onDeleteRow?: (data: any[], index: number) => void
 }
 
 type SortDirection = 'asc' | 'desc' | null
 
-export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, headers, selectedFields }) => {
+export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, headers, selectedFields, onDeleteRow }) => {
   const [activeTab, setActiveTab] = useState<'after' | 'before' | 'diff'>('after')
   const [sortColumn, setSortColumn] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>(null)
@@ -233,6 +234,11 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                  {onDeleteRow && activeTab !== 'diff' && (
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
+                      操作
+                    </th>
+                  )}
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     #
                   </th>
@@ -253,6 +259,36 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
               <tbody className="bg-white divide-y divide-gray-200">
                 {sortedData.map((row, index) => (
                   <tr key={index} className="hover:bg-gray-50">
+                    {onDeleteRow && activeTab !== 'diff' && (
+                      <td className="px-4 py-3 text-center">
+                        <button
+                          onClick={() => {
+                            // ソート済みデータの場合、元のデータ配列でのインデックスを見つける
+                            const rowToDelete = sortedData[index]
+                            const originalIndex = currentData.findIndex(r => r === rowToDelete)
+                            if (originalIndex !== -1) {
+                              onDeleteRow(currentData, originalIndex)
+                            }
+                          }}
+                          className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1 rounded transition-colors"
+                          title="この行を削除"
+                        >
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </td>
+                    )}
                     <td className="px-4 py-3 text-sm text-gray-500">
                       {index + 1}
                     </td>
