@@ -53,6 +53,14 @@ export default function Home() {
     setResult(null)
   }
 
+  const handleDeleteRow = (index: number) => {
+    if (window.confirm('この行を削除しますか？')) {
+      const newData = csvData.filter((_, i) => i !== index)
+      setCsvData(newData)
+      setResult(null) // 結果をリセット
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,6 +89,7 @@ export default function Home() {
                 data={csvData} 
                 headers={headers} 
                 title="アップロードされたCSVデータ" 
+                onDeleteRow={handleDeleteRow}
               />
             </>
           )}
