@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { FileUploader } from '../components/FileUploader'
 import { FieldSelector } from '../components/FieldSelector'
 import { ResultTable } from '../components/ResultTable'
+import { CSVPreview } from '../components/CSVPreview'
 import { deduplicateCSV, DeduplicateResult } from '../lib/deduplicate'
 
 export default function Home() {
@@ -45,6 +46,13 @@ export default function Home() {
     setResult(deduplicatedResult)
   }
 
+  const handleReset = () => {
+    setCsvData([])
+    setHeaders([])
+    setSelectedFields([])
+    setResult(null)
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +66,7 @@ export default function Home() {
         <div className="space-y-6">
           <FileUploader onFileUpload={handleFileUpload} />
 
-          {headers.length > 0 && (
+          {headers.length > 0 && !result && (
             <>
               <FieldSelector
                 fields={headers}
@@ -66,22 +74,34 @@ export default function Home() {
                 onFieldToggle={handleFieldToggle}
                 onSelectAll={handleSelectAll}
                 onDeselectAll={handleDeselectAll}
+                onDeduplicate={handleDeduplicate}
               />
 
-              <div className="flex justify-center">
-                <button
-                  onClick={handleDeduplicate}
-                  disabled={selectedFields.length === 0}
-                  className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-                >
-                  重複を排除
-                </button>
-              </div>
+              <CSVPreview 
+                data={csvData} 
+                headers={headers} 
+                title="アップロードされたCSVデータ" 
+              />
             </>
           )}
 
           {result && (
-            <ResultTable result={result} headers={headers} />
+            <>
+              <div className="flex justify-center mb-4">
+                <button
+                  onClick={handleReset}
+                  className="px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  新しいファイルを処理
+                </button>
+              </div>
+              
+              <ResultTable 
+                result={result} 
+                originalData={csvData}
+                headers={headers} 
+              />
+            </>
           )}
         </div>
       </div>

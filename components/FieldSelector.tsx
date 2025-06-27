@@ -8,6 +8,7 @@ interface FieldSelectorProps {
   onFieldToggle: (field: string) => void
   onSelectAll: () => void
   onDeselectAll: () => void
+  onDeduplicate: () => void
 }
 
 export const FieldSelector: React.FC<FieldSelectorProps> = ({
@@ -15,7 +16,8 @@ export const FieldSelector: React.FC<FieldSelectorProps> = ({
   selectedFields,
   onFieldToggle,
   onSelectAll,
-  onDeselectAll
+  onDeselectAll,
+  onDeduplicate
 }) => {
   if (fields.length === 0) {
     return null
@@ -62,8 +64,17 @@ export const FieldSelector: React.FC<FieldSelectorProps> = ({
         ))}
       </div>
       
-      <div className="mt-4 text-sm text-gray-600">
-        選択されたフィールド: {selectedFields.length} / {fields.length}
+      <div className="mt-4 flex justify-between items-center">
+        <div className="text-sm text-gray-600">
+          選択されたフィールド: {selectedFields.length} / {fields.length}
+        </div>
+        <button
+          onClick={onDeduplicate}
+          disabled={selectedFields.length === 0}
+          className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          重複を排除
+        </button>
       </div>
     </div>
   )
