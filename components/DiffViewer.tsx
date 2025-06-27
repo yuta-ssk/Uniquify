@@ -16,7 +16,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
   headers,
   selectedFields
 }) => {
-  const [showAll, setShowAll] = useState(false)
   const [filter, setFilter] = useState<'all' | 'kept' | 'removed'>('all')
 
   const getFilteredData = () => {
@@ -41,7 +40,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
   }
 
   const filteredData = getFilteredData()
-  const displayData = showAll ? filteredData : filteredData.slice(0, 20)
 
   const getRowClass = (status: 'kept' | 'removed') => {
     const baseClass = "hover:bg-opacity-80"
@@ -76,7 +74,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
     <div className="bg-white rounded-lg shadow p-6">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          差分ビュー（GitHub風）
+          差分ビュー
         </h3>
         
         <div className="flex flex-wrap gap-4 mb-4">
@@ -113,14 +111,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
             </button>
           </div>
           
-          {filteredData.length > 20 && (
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-            >
-              {showAll ? '最初の20行のみ表示' : 'すべて表示'}
-            </button>
-          )}
         </div>
 
         <div className="text-sm text-gray-600 mb-4">
@@ -138,9 +128,9 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
       </div>
 
       <div className="overflow-x-auto">
-        <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+        <div className="border border-gray-200 rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50 sticky top-0">
+            <thead className="bg-gray-50">
               <tr>
                 <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-8">
                   
@@ -168,7 +158,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {displayData.map(({ row, index, status }, displayIndex) => (
+              {filteredData.map(({ row, index, status }, displayIndex) => (
                 <tr key={`${index}-${displayIndex}`} className={getRowClass(status)}>
                   <td className="px-2 py-3 text-center">
                     {getStatusIcon(status)}
@@ -194,12 +184,6 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
             </tbody>
           </table>
         </div>
-        
-        {!showAll && filteredData.length > 20 && (
-          <p className="mt-2 text-sm text-gray-500 text-center">
-            他 {filteredData.length - 20} 行があります
-          </p>
-        )}
       </div>
     </div>
   )
