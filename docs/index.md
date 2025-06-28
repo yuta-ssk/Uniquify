@@ -11,10 +11,10 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/your-username/uniquify
+      link: https://github.com/yuta-ssk/uniquify
     - theme: alt
       text: Try Demo
-      link: https://your-username.github.io/uniquify/
+      link: https://yuta-ssk.github.io/uniquify/
 
 features:
   - title: 🚀 Easy to Use
@@ -35,7 +35,7 @@ features:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/uniquify.git
+git clone https://github.com/yoyuta-ssk/uniquify.git
 
 # Install dependencies
 cd uniquify

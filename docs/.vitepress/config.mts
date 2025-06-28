@@ -14,7 +14,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Deployment', link: '/deployment/' },
-      { text: 'Demo', link: 'https://your-username.github.io/uniquify/' }
+      { text: 'Demo', link: 'https://yoyuta-ssk.github.io/uniquify/' }
     ],
 
     sidebar: [
@@ -53,7 +53,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-username/uniquify' }
+      { icon: 'github', link: 'https://github.com/yoyuta-ssk/uniquify' }
     ],
 
     footer: {
