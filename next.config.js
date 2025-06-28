@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/bitwarden-deduper' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/uniquify' : '',
   images: {
     unoptimized: true,
   },

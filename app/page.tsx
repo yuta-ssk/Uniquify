@@ -12,6 +12,7 @@ export default function Home() {
   const [headers, setHeaders] = useState<string[]>([])
   const [selectedFields, setSelectedFields] = useState<string[]>([])
   const [result, setResult] = useState<DeduplicateResult | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleFileUpload = (data: any[], headers: string[]) => {
     setCsvData(data)
@@ -89,9 +90,13 @@ export default function Home() {
         </div>
 
         <div className="space-y-6">
-          <FileUploader onFileUpload={handleFileUpload} />
+          <FileUploader 
+            onFileUpload={handleFileUpload} 
+            isLoading={isLoading}
+            onLoadingChange={setIsLoading}
+          />
 
-          {headers.length > 0 && !result && (
+          {headers.length > 0 && !result && !isLoading && (
             <>
               <FieldSelector
                 fields={headers}
@@ -111,7 +116,7 @@ export default function Home() {
             </>
           )}
 
-          {result && (
+          {result && !isLoading && (
             <>
               <div className="flex justify-center mb-4">
                 <button

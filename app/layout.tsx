@@ -5,7 +5,7 @@ import '../styles/globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CSV重複排除ツール',
+  title: 'Uniquify - CSV重複排除ツール',
   description: 'CSVファイルの重複データを排除するWebツール',
 }
 
