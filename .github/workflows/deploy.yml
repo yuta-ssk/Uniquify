@@ -45,9 +45,6 @@ jobs:
           else
             echo "Directory docs/.vitepress/dist does not exist. Skipping copy operation."
           fi
-          
-      - name: Add .nojekyll file
-        run: touch out/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
