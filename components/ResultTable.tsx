@@ -228,7 +228,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  {onDeleteRow && activeTab !== 'diff' && (
+                  {onDeleteRow && (
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
                       {t('operation')}
                     </th>
@@ -253,7 +253,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
               <tbody className="bg-white divide-y divide-gray-200">
                 {sortedData.map((row, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    {onDeleteRow && activeTab !== 'diff' && (
+                    {onDeleteRow && (
                       <td className="px-4 py-3 text-center">
                         <button
                           onClick={() => {
