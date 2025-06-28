@@ -108,7 +108,7 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, on
             <thead className="bg-gray-50">
               <tr>
                 {onDeleteRow && (
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
+                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
                     操作
                   </th>
                 )}

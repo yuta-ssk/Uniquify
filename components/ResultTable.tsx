@@ -227,7 +227,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
               <thead className="bg-gray-50">
                 <tr>
                   {onDeleteRow && activeTab !== 'diff' && (
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
                       操作
                     </th>
                   )}
