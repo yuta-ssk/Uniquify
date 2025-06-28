@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
+import { useLanguage } from '../lib/i18n/context'
 
 interface CSVPreviewProps {
   data: any[]
@@ -12,6 +13,7 @@ interface CSVPreviewProps {
 type SortDirection = 'asc' | 'desc' | null
 
 export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, onDeleteRow }) => {
+  const { t } = useLanguage()
   const [sortColumn, setSortColumn] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>(null)
 
@@ -93,13 +95,13 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, on
     <div className="bg-white rounded-lg shadow p-6">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="text-sm text-gray-600">総行数: {data.length}行</p>
+        <p className="text-sm text-gray-600">{t('totalRows')}: {data.length}{t('rows')}</p>
       </div>
       
       <div className="overflow-x-auto">
         <div className="mb-4">
           <h4 className="text-md font-medium text-gray-700">
-            データプレビュー (全 {data.length} 行)
+            {t('dataPreview')} ({t('allRows')} {data.length} {t('rows')})
           </h4>
         </div>
         
@@ -109,7 +111,7 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, on
               <tr>
                 {onDeleteRow && (
                   <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
-                    操作
+                    {t('operation')}
                   </th>
                 )}
                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -137,7 +139,7 @@ export const CSVPreview: React.FC<CSVPreviewProps> = ({ data, headers, title, on
                       <button
                         onClick={() => onDeleteRow(originalIndex)}
                         className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1 rounded transition-colors"
-                        title="この行を削除"
+                        title={t('deleteThisRow')}
                       >
                         <svg
                           className="w-4 h-4"

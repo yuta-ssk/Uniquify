@@ -62,6 +62,34 @@ export type TranslationKeys = {
   language: string;
   japanese: string;
   english: string;
+  
+  // Common UI
+  operation: string;
+  totalRows: string;
+  dataPreview: string;
+  allRows: string;
+  deleteThisRow: string;
+  
+  // Result view
+  processingResult: string;
+  originalRows: string;
+  deduplicatedRows: string;
+  deletedDuplicates: string;
+  downloadProcessedCSV: string;
+  processedData: string;
+  beforeData: string;
+  diffView: string;
+  rows: string;
+  
+  // Diff view
+  unchanged: string;
+  removed: string;
+  legend: string;
+  all: string;
+  kept: string;
+  keptData: string;
+  removedData: string;
+  duplicateDetectionField: string;
 };
 
 export const translations: Record<Language, TranslationKeys> = {
@@ -127,6 +155,34 @@ export const translations: Record<Language, TranslationKeys> = {
     language: '言語',
     japanese: '日本語',
     english: 'English',
+    
+    // Common UI
+    operation: '操作',
+    totalRows: '総行数',
+    dataPreview: 'データプレビュー',
+    allRows: '全',
+    deleteThisRow: 'この行を削除',
+    
+    // Result view
+    processingResult: '処理結果',
+    originalRows: '元の行数',
+    deduplicatedRows: '重複除去後の行数',
+    deletedDuplicates: '削除された重複',
+    downloadProcessedCSV: '処理後CSVをダウンロード',
+    processedData: '処理後データ',
+    beforeData: '処理前データ',
+    diffView: '差分ビュー',
+    rows: '行',
+    
+    // Diff view
+    unchanged: '変更なし',
+    removed: '削除済み',
+    legend: '凡例',
+    all: 'すべて',
+    kept: '保持',
+    keptData: '保持されたデータ',
+    removedData: '削除されたデータ',
+    duplicateDetectionField: '重複判定対象フィールド',
   },
   en: {
     // Common
@@ -190,5 +246,33 @@ export const translations: Record<Language, TranslationKeys> = {
     language: 'Language',
     japanese: '日本語',
     english: 'English',
+    
+    // Common UI
+    operation: 'Action',
+    totalRows: 'Total Rows',
+    dataPreview: 'Data Preview',
+    allRows: 'All',
+    deleteThisRow: 'Delete this row',
+    
+    // Result view
+    processingResult: 'Processing Result',
+    originalRows: 'Original Rows',
+    deduplicatedRows: 'Deduplicated Rows',
+    deletedDuplicates: 'Deleted Duplicates',
+    downloadProcessedCSV: 'Download Processed CSV',
+    processedData: 'Processed Data',
+    beforeData: 'Before Processing',
+    diffView: 'Diff View',
+    rows: 'rows',
+    
+    // Diff view
+    unchanged: 'Unchanged',
+    removed: 'Removed',
+    legend: 'Legend',
+    all: 'All',
+    kept: 'Kept',
+    keptData: 'Kept Data',
+    removedData: 'Removed Data',
+    duplicateDetectionField: 'Duplicate Detection Field',
   },
 };

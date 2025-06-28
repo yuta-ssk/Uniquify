@@ -5,6 +5,7 @@ import Papa from 'papaparse'
 import { DeduplicateResult } from '../lib/deduplicate'
 import { DiffViewer } from './DiffViewer'
 import { calculateDiff } from '../lib/diff'
+import { useLanguage } from '../lib/i18n/context'
 
 interface ResultTableProps {
   result: DeduplicateResult | null
@@ -17,6 +18,7 @@ interface ResultTableProps {
 type SortDirection = 'asc' | 'desc' | null
 
 export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, headers, selectedFields, onDeleteRow }) => {
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState<'after' | 'before' | 'diff'>('after')
   const [sortColumn, setSortColumn] = useState<string | null>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>(null)
@@ -53,9 +55,9 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
   }
   
   const getCurrentTitle = () => {
-    if (activeTab === 'before') return '処理前データ'
-    if (activeTab === 'after') return '処理後データ'
-    return '差分ビュー'
+    if (activeTab === 'before') return t('beforeData')
+    if (activeTab === 'after') return t('processedData')
+    return t('diffView')
   }
   
   const currentData = getCurrentData()
@@ -133,21 +135,21 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">処理結果</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('processingResult')}</h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-blue-50 p-4 rounded-lg">
-            <p className="text-sm text-blue-600 font-medium">元の行数</p>
+            <p className="text-sm text-blue-600 font-medium">{t('originalRows')}</p>
             <p className="text-2xl font-bold text-blue-900">{result.totalRows}</p>
           </div>
           
           <div className="bg-green-50 p-4 rounded-lg">
-            <p className="text-sm text-green-600 font-medium">重複除去後の行数</p>
+            <p className="text-sm text-green-600 font-medium">{t('deduplicatedRows')}</p>
             <p className="text-2xl font-bold text-green-900">{result.uniqueRows}</p>
           </div>
           
           <div className="bg-red-50 p-4 rounded-lg">
-            <p className="text-sm text-red-600 font-medium">削除された重複</p>
+            <p className="text-sm text-red-600 font-medium">{t('deletedDuplicates')}</p>
             <p className="text-2xl font-bold text-red-900">{result.duplicatesRemoved}</p>
           </div>
         </div>
@@ -156,7 +158,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
           onClick={() => downloadCSV(result.data, 'deduplicated')}
           className="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
         >
-          処理後CSVをダウンロード
+          {t('downloadProcessedCSV')}
         </button>
       </div>
       
@@ -174,7 +176,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
-            処理後データ ({result.data.length}行)
+            {t('processedData')} ({result.data.length}{t('rows')})
           </button>
           <button
             onClick={() => {
@@ -188,7 +190,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
-            処理前データ ({originalData.length}行)
+            {t('beforeData')} ({originalData.length}{t('rows')})
           </button>
           <button
             onClick={() => {
@@ -202,7 +204,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
-            差分ビュー ({diffResult.removed.length}削除)
+            {t('diffView')} ({diffResult.removed.length}削除)
           </button>
         </div>
       </div>
@@ -218,7 +220,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
         <div className="overflow-x-auto">
           <div className="mb-4">
             <h3 className="text-md font-medium text-gray-700">
-              {currentTitle} (全 {currentData.length} 行)
+              {currentTitle} ({t('allRows')} {currentData.length} {t('rows')})
             </h3>
           </div>
           
@@ -228,7 +230,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
                 <tr>
                   {onDeleteRow && activeTab !== 'diff' && (
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
-                      操作
+                      {t('operation')}
                     </th>
                   )}
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -263,7 +265,7 @@ export const ResultTable: React.FC<ResultTableProps> = ({ result, originalData, 
                             }
                           }}
                           className="text-red-600 hover:text-red-800 hover:bg-red-50 p-1 rounded transition-colors"
-                          title="この行を削除"
+                          title={t('deleteThisRow')}
                         >
                           <svg
                             className="w-4 h-4"

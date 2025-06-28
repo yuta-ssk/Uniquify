@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { DiffResult } from '../lib/diff'
+import { useLanguage } from '../lib/i18n/context'
 
 interface DiffViewerProps {
   originalData: any[]
@@ -16,6 +17,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
   headers,
   selectedFields
 }) => {
+  const { t } = useLanguage()
   const [filter, setFilter] = useState<'all' | 'kept' | 'removed'>('all')
 
   const getFilteredData = () => {
@@ -53,13 +55,13 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
   const getStatusIcon = (status: 'kept' | 'removed') => {
     if (status === 'kept') {
       return (
-        <span className="text-green-600 font-bold text-lg" title="保持">
+        <span className="text-green-600 font-bold text-lg" title={t('unchanged')}>
           +
         </span>
       )
     } else {
       return (
-        <span className="text-red-600 font-bold text-lg" title="削除">
+        <span className="text-red-600 font-bold text-lg" title={t('removed')}>
           -
         </span>
       )
@@ -74,7 +76,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
     <div className="bg-white rounded-lg shadow p-6">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          差分ビュー
+          {t('diffView')}
         </h3>
         
         <div className="flex flex-wrap gap-4 mb-4">
@@ -87,7 +89,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              すべて ({originalData.length})
+              {t('all')} ({originalData.length}{t('rows')})
             </button>
             <button
               onClick={() => setFilter('kept')}
@@ -97,7 +99,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
                   : 'bg-green-100 text-green-700 hover:bg-green-200'
               }`}
             >
-              保持 ({diffResult.kept.length})
+              {t('kept')} ({diffResult.kept.length}{t('rows')})
             </button>
             <button
               onClick={() => setFilter('removed')}
@@ -107,7 +109,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
                   : 'bg-red-100 text-red-700 hover:bg-red-200'
               }`}
             >
-              削除 ({diffResult.removed.length})
+              {t('removed')} ({diffResult.removed.length}{t('rows')})
             </button>
           </div>
           
@@ -117,11 +119,11 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">
               <span className="text-green-600 font-bold">+</span>
-              <span>保持されたデータ</span>
+              <span>{t('keptData')}</span>
             </div>
             <div className="flex items-center gap-1">
               <span className="text-red-600 font-bold">-</span>
-              <span>削除されたデータ</span>
+              <span>{t('removedData')}</span>
             </div>
           </div>
         </div>
@@ -149,7 +151,7 @@ export const DiffViewer: React.FC<DiffViewerProps> = ({
                   >
                     {header}
                     {isSelectedField(header) && (
-                      <span className="ml-1 text-blue-600" title="重複判定対象フィールド">
+                      <span className="ml-1 text-blue-600" title={t('duplicateDetectionField')}>
                         🔑
                       </span>
                     )}
