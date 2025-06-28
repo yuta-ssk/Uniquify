@@ -24,6 +24,11 @@ export type TranslationKeys = {
   feature3: string;
   feature4: string;
   
+  // Privacy
+  privacyTitle: string;
+  privacyMessage: string;
+  privacyIcon: string;
+  
   // Field selection
   fieldSelectionTitle: string;
   fieldSelectionDescription: string;
@@ -117,6 +122,11 @@ export const translations: Record<Language, TranslationKeys> = {
     feature3: '処理後のデータを個別に削除可能',
     feature4: '整理されたデータをCSV形式でダウンロード',
     
+    // Privacy
+    privacyTitle: 'プライバシー保護',
+    privacyMessage: 'すべての処理はお使いのブラウザ内で完結します。アップロードされたファイルやデータは一切サーバーに送信されません。',
+    privacyIcon: '🔒',
+    
     // Field selection
     fieldSelectionTitle: 'フィールドを選択',
     fieldSelectionDescription: '重複判定に使用するフィールドを選択してください',
@@ -207,6 +217,11 @@ export const translations: Record<Language, TranslationKeys> = {
     feature2: 'Display duplicate and unique data separately',
     feature3: 'Delete individual records after processing',
     feature4: 'Download organized data in CSV format',
+    
+    // Privacy
+    privacyTitle: 'Privacy Protection',
+    privacyMessage: 'All processing happens entirely in your browser. No files or data are ever sent to any server.',
+    privacyIcon: '🔒',
     
     // Field selection
     fieldSelectionTitle: 'Select Fields',

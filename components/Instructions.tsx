@@ -7,6 +7,16 @@ export default function Instructions() {
 
   return (
     <div className="max-w-3xl mx-auto">
+      <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+        <div className="flex items-start">
+          <span className="text-2xl mr-3">{t('privacyIcon')}</span>
+          <div className="flex-1">
+            <h3 className="text-lg font-bold mb-2 text-green-900">{t('privacyTitle')}</h3>
+            <p className="text-green-800">{t('privacyMessage')}</p>
+          </div>
+        </div>
+      </div>
+
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
         <h2 className="text-xl font-bold mb-4 text-blue-900">{t('howToUseTitle')}</h2>
         <ol className="space-y-3 text-blue-800">
