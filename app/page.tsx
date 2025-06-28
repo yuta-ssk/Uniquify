@@ -5,9 +5,12 @@ import { FileUploader } from '../components/FileUploader'
 import { FieldSelector } from '../components/FieldSelector'
 import { ResultTable } from '../components/ResultTable'
 import { CSVPreview } from '../components/CSVPreview'
+import LanguageSelector from '../components/LanguageSelector'
 import { deduplicateCSV, DeduplicateResult } from '../lib/deduplicate'
+import { useLanguage } from '../lib/i18n/context'
 
 export default function Home() {
+  const { t } = useLanguage()
   const [csvData, setCsvData] = useState<any[]>([])
   const [headers, setHeaders] = useState<string[]>([])
   const [selectedFields, setSelectedFields] = useState<string[]>([])
@@ -39,7 +42,7 @@ export default function Home() {
 
   const handleDeduplicate = () => {
     if (csvData.length === 0 || selectedFields.length === 0) {
-      alert('CSVファイルをアップロードし、少なくとも1つのフィールドを選択してください。')
+      alert(t('selectAtLeastOneField'))
       return
     }
 
@@ -55,7 +58,7 @@ export default function Home() {
   }
 
   const handleDeleteRow = (index: number) => {
-    if (window.confirm('この行を削除しますか？')) {
+    if (window.confirm(t('deleteRow') + '?')) {
       const newData = csvData.filter((_, i) => i !== index)
       setCsvData(newData)
       setResult(null) // 結果をリセット
@@ -63,7 +66,7 @@ export default function Home() {
   }
 
   const handleDeleteProcessedRow = (data: any[], index: number) => {
-    if (window.confirm('この行を削除しますか？')) {
+    if (window.confirm(t('deleteRow') + '?')) {
       // 削除する行を特定
       const rowToDelete = data[index]
       
@@ -82,10 +85,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-end mb-4">
+          <LanguageSelector />
+        </div>
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">CSV重複排除ツール</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('appTitle')}</h1>
           <p className="mt-2 text-gray-600">
-            CSVファイルをアップロードして、重複データを排除します
+            {t('appDescription')}
           </p>
         </div>
 
@@ -110,7 +116,7 @@ export default function Home() {
               <CSVPreview 
                 data={csvData} 
                 headers={headers} 
-                title="アップロードされたCSVデータ" 
+                title={t('uploadTitle')} 
                 onDeleteRow={handleDeleteRow}
               />
             </>
@@ -123,7 +129,7 @@ export default function Home() {
                   onClick={handleReset}
                   className="px-6 py-2 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors"
                 >
-                  新しいファイルを処理
+                  {t('clearButton')}
                 </button>
               </div>
               

@@ -3,6 +3,7 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Papa from 'papaparse'
+import { useLanguage } from '../lib/i18n/context'
 
 interface FileUploaderProps {
   onFileUpload: (data: any[], headers: string[]) => void
@@ -11,6 +12,8 @@ interface FileUploaderProps {
 }
 
 export const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload, isLoading = false, onLoadingChange }) => {
+  const { t } = useLanguage()
+  
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0]
     
@@ -26,8 +29,8 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload, isLoad
         onLoadingChange?.(false)
       },
       error: (error) => {
-        console.error('CSV解析エラー:', error)
-        alert('CSVファイルの解析に失敗しました。')
+        console.error('CSV parsing error:', error)
+        alert(t('errorProcessingFile'))
         onLoadingChange?.(false)
       }
     })
@@ -62,9 +65,8 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload, isLoad
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
           <p className="mt-2 text-sm text-blue-600 font-medium">
-            CSVファイルを読み込み中...
+            {t('processing')}
           </p>
-          <p className="text-xs text-blue-500 mt-1">しばらくお待ちください</p>
         </>
       ) : (
         <>
@@ -84,10 +86,9 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onFileUpload, isLoad
           </svg>
           <p className="mt-2 text-sm text-gray-600">
             {isDragActive
-              ? 'ファイルをドロップしてください'
-              : 'CSVファイルをドラッグ&ドロップ、またはクリックして選択'}
+              ? t('dragDropText')
+              : t('uploadDescription')}
           </p>
-          <p className="text-xs text-gray-500 mt-1">CSV形式のみ対応</p>
         </>
       )}
     </div>

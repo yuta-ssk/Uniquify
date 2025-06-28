@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useLanguage } from '../lib/i18n/context'
 
 interface FieldSelectorProps {
   fields: string[]
@@ -19,6 +20,8 @@ export const FieldSelector: React.FC<FieldSelectorProps> = ({
   onDeselectAll,
   onDeduplicate
 }) => {
+  const { t } = useLanguage()
+  
   if (fields.length === 0) {
     return null
   }
@@ -27,20 +30,20 @@ export const FieldSelector: React.FC<FieldSelectorProps> = ({
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-900">
-          重複判定に使用するフィールドを選択
+          {t('fieldSelectionDescription')}
         </h2>
         <div className="space-x-2">
           <button
             onClick={onSelectAll}
             className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
           >
-            すべて選択
+            {t('selectAll')}
           </button>
           <button
             onClick={onDeselectAll}
             className="px-3 py-1 text-sm bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
           >
-            すべて解除
+            {t('deselectAll')}
           </button>
         </div>
       </div>
@@ -66,14 +69,14 @@ export const FieldSelector: React.FC<FieldSelectorProps> = ({
       
       <div className="mt-4 flex justify-between items-center">
         <div className="text-sm text-gray-600">
-          選択されたフィールド: {selectedFields.length} / {fields.length}
+          {t('selectedFields')}: {selectedFields.length} / {fields.length}
         </div>
         <button
           onClick={onDeduplicate}
           disabled={selectedFields.length === 0}
           className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          重複を排除
+          {t('processButton')}
         </button>
       </div>
     </div>
