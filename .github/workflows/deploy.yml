@@ -40,7 +40,11 @@ jobs:
       - name: Merge build outputs
         run: |
           mkdir -p out/docs
-          cp -r docs/.vitepress/dist/* out/docs/
+          if [ -d "docs/.vitepress/dist" ]; then
+            cp -r docs/.vitepress/dist/* out/docs/
+          else
+            echo "Directory docs/.vitepress/dist does not exist. Skipping copy operation."
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
