@@ -34,6 +34,18 @@ jobs:
       - name: Build with Next.js
         run: npm run build
 
+      - name: Build documentation
+        run: npm run docs:build
+
+      - name: Merge build outputs
+        run: |
+          mkdir -p out/docs
+          if [ -d "docs/.vitepress/dist" ]; then
+            cp -r docs/.vitepress/dist/* out/docs/
+          else
+            echo "Directory docs/.vitepress/dist does not exist. Skipping copy operation."
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
