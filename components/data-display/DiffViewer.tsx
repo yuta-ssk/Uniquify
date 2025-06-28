@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { DiffResult } from '../lib/diff'
-import { useLanguage } from '../lib/i18n/context'
+import { DiffResult } from '../../lib/diff'
+import { useLanguage } from '../../lib/i18n/context'
 
 interface DiffViewerProps {
   originalData: any[]

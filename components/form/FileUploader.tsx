@@ -3,7 +3,7 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Papa from 'papaparse'
-import { useLanguage } from '../lib/i18n/context'
+import { useLanguage } from '../../lib/i18n/context'
 
 interface FileUploaderProps {
   onFileUpload: (data: any[], headers: string[]) => void

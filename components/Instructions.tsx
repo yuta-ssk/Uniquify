@@ -1,9 +1,9 @@
 'use client'
 
 import { useLanguage } from '../lib/i18n/context'
-import InstructionCard from './InstructionCard'
-import StepListItem from './StepListItem'
-import FeatureListItem from './FeatureListItem'
+import InstructionCard from './ui/InstructionCard'
+import StepListItem from './ui/StepListItem'
+import FeatureListItem from './ui/FeatureListItem'
 
 export default function Instructions() {
   const { t } = useLanguage()
