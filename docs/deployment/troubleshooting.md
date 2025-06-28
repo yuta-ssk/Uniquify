@@ -130,6 +130,6 @@ When something goes wrong, check:
 
 If you're still stuck:
 
-1. Check [GitHub Issues](https://github.com/your-username/uniquify/issues)
+1. Check [GitHub Issues](https://github.com/yoyuta-ssk/uniquify/issues)
 2. Review [Next.js deployment docs](https://nextjs.org/docs/deployment)
-3. Ask in [GitHub Discussions](https://github.com/your-username/uniquify/discussions)
+3. Ask in [GitHub Discussions](https://github.com/yoyuta-ssk/uniquify/discussions)

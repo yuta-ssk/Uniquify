@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { useLanguage } from '../lib/i18n/context'
+import { useLanguage } from '../../lib/i18n/context'
 
 interface CSVPreviewProps {
   data: any[]

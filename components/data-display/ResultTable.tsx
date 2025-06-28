@@ -2,10 +2,10 @@
 
 import React, { useState, useMemo } from 'react'
 import Papa from 'papaparse'
-import { DeduplicateResult } from '../lib/deduplicate'
+import { DeduplicateResult } from '../../lib/deduplicate'
 import { DiffViewer } from './DiffViewer'
-import { calculateDiff } from '../lib/diff'
-import { useLanguage } from '../lib/i18n/context'
+import { calculateDiff } from '../../lib/diff'
+import { useLanguage } from '../../lib/i18n/context'
 
 interface ResultTableProps {
   result: DeduplicateResult | null
