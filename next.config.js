@@ -2,6 +2,7 @@
 const nextConfig = {
   output: 'export',
   basePath: process.env.NODE_ENV === 'production' ? '/uniquify' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/uniquify/' : '',
   images: {
     unoptimized: true,
   },
