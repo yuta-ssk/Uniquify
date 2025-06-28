@@ -12,6 +12,18 @@ export type TranslationKeys = {
   orText: string;
   selectFileButton: string;
   
+  // Instructions
+  howToUseTitle: string;
+  howToStep1: string;
+  howToStep2: string;
+  howToStep3: string;
+  howToStep4: string;
+  featuresTitle: string;
+  feature1: string;
+  feature2: string;
+  feature3: string;
+  feature4: string;
+  
   // Field selection
   fieldSelectionTitle: string;
   fieldSelectionDescription: string;
@@ -65,6 +77,18 @@ export const translations: Record<Language, TranslationKeys> = {
     orText: 'または',
     selectFileButton: 'ファイルを選択',
     
+    // Instructions
+    howToUseTitle: '使い方',
+    howToStep1: 'CSVファイルをドラッグ＆ドロップまたは選択してアップロードします',
+    howToStep2: '重複判定に使用するフィールド（列）を選択します',
+    howToStep3: '「重複を整理」ボタンをクリックして処理を開始します',
+    howToStep4: '処理結果を確認し、必要に応じてCSVファイルをダウンロードします',
+    featuresTitle: '主な機能',
+    feature1: '選択したフィールドの組み合わせで重複を判定',
+    feature2: '重複データとユニークデータを分けて表示',
+    feature3: '処理後のデータを個別に削除可能',
+    feature4: '整理されたデータをCSV形式でダウンロード',
+    
     // Field selection
     fieldSelectionTitle: 'フィールドを選択',
     fieldSelectionDescription: '重複判定に使用するフィールドを選択してください',
@@ -115,6 +139,18 @@ export const translations: Record<Language, TranslationKeys> = {
     dragDropText: 'Drag and drop file here',
     orText: 'or',
     selectFileButton: 'Select File',
+    
+    // Instructions
+    howToUseTitle: 'How to Use',
+    howToStep1: 'Upload a CSV file by dragging and dropping or selecting it',
+    howToStep2: 'Select the fields (columns) to use for duplicate detection',
+    howToStep3: 'Click the "Process Duplicates" button to start processing',
+    howToStep4: 'Review the results and download the CSV file if needed',
+    featuresTitle: 'Key Features',
+    feature1: 'Detect duplicates based on selected field combinations',
+    feature2: 'Display duplicate and unique data separately',
+    feature3: 'Delete individual records after processing',
+    feature4: 'Download organized data in CSV format',
     
     // Field selection
     fieldSelectionTitle: 'Select Fields',

@@ -6,6 +6,7 @@ import { FieldSelector } from '../components/FieldSelector'
 import { ResultTable } from '../components/ResultTable'
 import { CSVPreview } from '../components/CSVPreview'
 import LanguageSelector from '../components/LanguageSelector'
+import Instructions from '../components/Instructions'
 import { deduplicateCSV, DeduplicateResult } from '../lib/deduplicate'
 import { useLanguage } from '../lib/i18n/context'
 
@@ -101,6 +102,11 @@ export default function Home() {
             isLoading={isLoading}
             onLoadingChange={setIsLoading}
           />
+
+          {/* CSVアップロード前に説明を表示 */}
+          {csvData.length === 0 && !isLoading && (
+            <Instructions />
+          )}
 
           {headers.length > 0 && !result && !isLoading && (
             <>
